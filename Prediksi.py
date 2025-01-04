@@ -70,7 +70,7 @@ elif choice == "Dataset":
     st.write("""
     **Penjelasan Dataset:**
     Data yang digunakan berasal dari hasil observasi dari Badan Meteorologi, Klimatologi, dan Geofisika (BMKG) Stasiun Meteorologi Perak I. 
-    Data ini diambil dari website [http://dataonline.bmkg.go.id/](http://dataonline.bmkg.go.id/). 
+    Data ini diambil dari website [http://dataonline.bmkg.go.id/dataonline-home](http://dataonline.bmkg.go.id/dataonline-home). 
     Data harian selama lima tahun terakhir, mulai Januari 2018 hingga Desember 2024, digunakan untuk penelitian ini. 
     Total jumlah data hingga saat ini berjumlah 2.557 data. 
     Parameter yang digunakan dalam penelitian ini adalah:
