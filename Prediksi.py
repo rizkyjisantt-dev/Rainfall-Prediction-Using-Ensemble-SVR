@@ -60,7 +60,7 @@ if choice == "Homepage":
     st.sidebar.success("Pilih halaman berikut")
     text = """<p>Selamat Datang Sistem Prediksi Curah Hujan menggunakan Ensemble Support Vector Regression 👋. Data yang digunakan merupakan data rekapan harian milik Badan Meteorologi Klimatologi dan Geofisika (BMKG) yang dapat diakses pada laman <a href='https://dataonline.bmkg.go.id/dataonline-home'>dataonline.bmkg.go.id/dataonline-home</a>.</p>"""
     st.markdown(text, unsafe_allow_html=True)
-    image_url = "https://github.com/rizkyjisantt/skripsi/blob/main/laman%20data%20online%20bmkg.png" # Gunakan URL gambar langsung
+    image_url = "https://github.com/rizkyjisantt/skripsi/blob/main/lamandataonlinebmkg.png" # Gunakan URL gambar langsung
     st.image(image_url, caption='Laman dataonline.bmkg.go.id/dataonline-home', width=None)
 
 
