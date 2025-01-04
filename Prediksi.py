@@ -58,10 +58,10 @@ def load_data():
 if choice == "Homepage":
     st.title("Prediksi Curah Hujan menggunakan Ensemble Support Vector Regression ")
     st.sidebar.success("Pilih halaman berikut")
-    text = """<p>Selamat Datang Sistem Prediksi Curah Hujan menggunakan Ensemble Support Vector Regression 👋. Data yang digunakan merupakan data rekapan harian milik Badan Meteorologi Klimatologi dan Geofisika (BMKG) yang dapat diakses pada laman <a href='https://dataonline.bmkg.go.id/home'>dataonline.bmkg.go.id</a>.</p>"""
+    text = """<p>Selamat Datang Sistem Prediksi Curah Hujan menggunakan Ensemble Support Vector Regression 👋. Data yang digunakan merupakan data rekapan harian milik Badan Meteorologi Klimatologi dan Geofisika (BMKG) yang dapat diakses pada laman <a href='https://dataonline.bmkg.go.id/dataonline-home'>dataonline.bmkg.go.id/dataonline-home</a>.</p>"""
     st.markdown(text, unsafe_allow_html=True)
     image_url = "https://penabirru.wordpress.com/wp-content/uploads/2020/02/1.png"  # Gunakan URL gambar langsung
-    st.image(image_url, caption='Laman dataonline.bmkg.go.id', width=None)
+    st.image(image_url, caption='Laman dataonline.bmkg.go.id/dataonline-home', width=None)
 
 
 elif choice == "Dataset":
