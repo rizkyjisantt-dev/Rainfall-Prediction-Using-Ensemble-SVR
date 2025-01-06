@@ -339,15 +339,10 @@ elif choice == "Modelling":
         best_model = grid_search.best_estimator_
         # Prediksi pada data testing
         y_pred = best_model.predict(X_test)
-        # Fungsi untuk denormalisasi menggunakan MinMaxScaler
-        def denormalize(y):
-            return y * (data_max - data_min) + data_min
-        # Min dan Max dari data asli
-        data_min = data_outlier['curah_hujan'].min()  # misalnya nilai minimum dari data asli sebelum normalisasi
-        data_max = data_outlier['curah_hujan'].max() # misalnya nilai maksimum dari data asli sebelum normalisasi
-        # Denormalisasi
-        y_test_denorm = denormalize(y_test)
-        y_pred_denorm = denormalize(y_pred)
+        # Denormalisasi hasil prediksi dan data aktual
+        scaler = st.session_state["scaler"]
+        y_pred_denorm = scaler.inverse_transform(y_pred.reshape(-1, 1)).flatten()
+        y_test_denorm = scaler.inverse_transform(y_test.values.reshape(-1, 1)).flatten()
         # Evaluasi
         rmse = mean_squared_error(y_test, y_pred, squared=False)
         mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
