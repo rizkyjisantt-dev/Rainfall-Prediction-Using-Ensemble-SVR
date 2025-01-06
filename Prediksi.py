@@ -370,8 +370,8 @@ elif choice == "Modelling":
         mape = np.mean(np.abs((y_test_denorm - y_pred_denorm) / y_test_denorm)) * 100
         # Output evaluasi
         st.write("### Hasil Evaluasi:")
-        st.write(f"**RMSE (Manual):** {rmse_manual:.2f}")
-        st.write(f"**MAPE:** {mape:.2f}%")
+        st.write(f"**RMSE :):** {rmse_manual:.2f}")
+        st.write(f"**MAPE :** {mape:.2f}%")
         st.write("Hyperparameter optimal:", grid_search.best_params_)
         # Simpan model ke dalam file
         joblib.dump(best_model, 'bagging_svr_model.pkl')
