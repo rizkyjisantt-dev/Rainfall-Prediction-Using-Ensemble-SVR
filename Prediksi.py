@@ -339,10 +339,11 @@ elif choice == "Modelling":
         best_model = grid_search.best_estimator_
         # Prediksi pada data testing
         y_pred = best_model.predict(X_test)
-        # Denormalisasi hasil prediksi dan data aktual
-        scaler = st.session_state["scaler"]
-        y_pred_denorm = scaler.inverse_transform(y_pred.reshape(-1, 1)).flatten()
-        y_test_denorm = scaler.inverse_transform(y_test.values.reshape(-1, 1)).flatten()
+        # Denormalisasi manual hasil prediksi dan data aktual
+        y_min = st.session_state["y_min"]
+        y_max = st.session_state["y_max"]
+        y_pred_denorm = y_pred * (y_max - y_min) + y_min
+        y_test_denorm = y_test.values * (y_max - y_min) + y_min
         # Evaluasi
         rmse = mean_squared_error(y_test, y_pred, squared=False)
         mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
