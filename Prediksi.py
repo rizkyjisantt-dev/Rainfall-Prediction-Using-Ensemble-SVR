@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV  # Untuk pemi
 from sklearn.utils import resample  # Untuk teknik sampling ulang seperti bootstrap
 from sklearn.ensemble import BaggingRegressor  # Model ensemble yang menggunakan teknik bootstrap untuk regresi
 from sklearn.svm import SVR  # Support Vector Regression untuk model regresi
-from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error  # Untuk mengukur performa model regresi
+from sklearn.metrics import root_mean_squared_error, mean_absolute_percentage_error  # Untuk mengukur performa model regresi
 import joblib  # Untuk menyimpan dan memuat model atau objek Python
 import pickle
 
@@ -362,7 +362,7 @@ elif choice == "Modelling":
         y_test_denorm = denormalize(y_test)
         y_pred_denorm = denormalize(y_pred)
         # Evaluasi
-        rmse = mean_squared_error(y_test, y_pred, squared=False)
+        rmse = root_mean_squared_error(y_test, y_pred, squared=False)
         mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
         # Output evaluasi
         st.write("### Hasil Evaluasi:")
