@@ -184,7 +184,7 @@ elif choice == "Preprocessing":
         st.write("""
         **Normalisasi Min-Max** adalah teknik untuk mengubah nilai-nilai data sehingga berada dalam rentang tertentu, biasanya antara 0 dan 1. 
         Teknik ini berguna untuk memastikan bahwa semua fitur memiliki skala yang sama, terutama untuk algoritma yang sensitif terhadap skala data, seperti algoritma berbasis jarak (misalnya KNN atau SVM).
-
+    
         **Rumus Normalisasi Min-Max**:
         ![Rumus Min-Max](https://miro.medium.com/v2/resize:fit:506/format:webp/0*S68TJiF_lZWV1THX.png)
         """)
@@ -194,8 +194,14 @@ elif choice == "Preprocessing":
         yang bisa mempengaruhi kinerja model.
         """)
         st.dataframe(data_outlier.head())
-        scaler = MinMaxScaler()
+        # Menyimpan nilai minimum dan maksimum dari data asli
         features_to_normalize = ['temperatur', 'kelembapan', 'kecepatan_angin', 'curah_hujan']
+        data_min = data_outlier[features_to_normalize].min()
+        data_max = data_outlier[features_to_normalize].max()
+        st.session_state['data_min'] = data_min
+        st.session_state['data_max'] = data_max
+        # Normalisasi menggunakan MinMaxScaler
+        scaler = MinMaxScaler()
         data_scaled = data_outlier.copy()
         data_scaled[features_to_normalize] = scaler.fit_transform(data_outlier[features_to_normalize])
         st.write("### Dataset setelah normalisasi:")
@@ -204,6 +210,7 @@ elif choice == "Preprocessing":
         Setelah normalisasi, nilai-nilai setiap fitur berada dalam rentang 0 hingga 1, yang akan membantu model dalam belajar secara lebih efisien.
         """)
         st.dataframe(data_scaled.head())
+        # Menyimpan data yang telah dinormalisasi ke session_state
         st.session_state['data_scaled'] = data_scaled
         if st.button("Simpan Hasil Normalisasi ke Pickle"):
             with open("data_scaled.pkl", "wb") as file:
