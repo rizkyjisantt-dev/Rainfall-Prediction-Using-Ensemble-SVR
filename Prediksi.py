@@ -12,7 +12,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV  # Untuk pemi
 from sklearn.utils import resample  # Untuk teknik sampling ulang seperti bootstrap
 from sklearn.ensemble import BaggingRegressor  # Model ensemble yang menggunakan teknik bootstrap untuk regresi
 from sklearn.svm import SVR  # Support Vector Regression untuk model regresi
-from sklearn.metrics import root_mean_squared_error, mean_absolute_percentage_error  # Untuk mengukur performa model regresi
+from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error  # Untuk mengukur performa model regresi
 import joblib  # Untuk menyimpan dan memuat model atau objek Python
 import pickle
 
