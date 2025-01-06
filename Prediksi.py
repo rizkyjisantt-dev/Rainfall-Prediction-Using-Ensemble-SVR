@@ -195,14 +195,14 @@ elif choice == "Preprocessing":
         """)
         st.dataframe(data_outlier.head())
         # Menyimpan nilai minimum dan maksimum dari data asli
-        features_to_normalize = ['temperatur', 'kelembapan', 'kecepatan_angin', 'curah_hujan']
-        data_min = data_outlier[features_to_normalize].min()
-        data_max = data_outlier[features_to_normalize].max()
+        data_min = data_outlier['curah_hujan'].min()
+        data_max = data_outlier['curah_hujan'].max()
         st.session_state['data_min'] = data_min
         st.session_state['data_max'] = data_max
         # Normalisasi menggunakan MinMaxScaler
         scaler = MinMaxScaler()
         data_scaled = data_outlier.copy()
+        features_to_normalize = ['temperatur', 'kelembapan', 'kecepatan_angin', 'curah_hujan']
         data_scaled[features_to_normalize] = scaler.fit_transform(data_outlier[features_to_normalize])
         st.write("### Dataset setelah normalisasi:")
         st.write("""
@@ -321,10 +321,10 @@ elif choice == "Modelling":
     else:
         st.error("Nilai minimum dan maksimum dari data asli tidak ditemukan. Pastikan Anda telah menyimpannya selama proses normalisasi.")
         st.stop()
-
-    # Fungsi untuk denormalisasi
+    # Fungsi denormalisasi untuk curah hujan
     def denormalize(y):
         return y * (data_max - data_min) + data_min
+
 
     # Pilihan kernel dan jumlah estimator
     kernel = st.selectbox("Pilih Kernel untuk SVR:", ["linear", "rbf", "poly"])
@@ -358,14 +358,12 @@ elif choice == "Modelling":
         best_model = grid_search.best_estimator_
         # Prediksi pada data testing
         y_pred = best_model.predict(X_test)
-
-        # Denormalisasi hasil prediksi dan data aktual
-        y_true_denorm = denormalize(y_test.values)
+        # Denormalisasi y_test dan y_pred
+        y_test_denorm = denormalize(y_test)
         y_pred_denorm = denormalize(y_pred)
-
         # Evaluasi
-        rmse = mean_squared_error(y_true_denorm, y_pred_denorm, squared=False)
-        mape = np.mean(np.abs((y_true_denorm - y_pred_denorm) / y_true_denorm)) * 100
+        rmse = mean_squared_error(y_test, y_pred, squared=False)
+        mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
         # Output evaluasi
         st.write("### Hasil Evaluasi:")
         st.write(f"**RMSE:** {rmse:.2f}")
@@ -374,14 +372,13 @@ elif choice == "Modelling":
         # Simpan model ke dalam file
         joblib.dump(best_model, 'bagging_svr_model.pkl')
         st.success("Model berhasil disimpan ke file 'bagging_svr_model.pkl'")
-
         # Visualisasi Prediksi vs Aktual
         plt.figure(figsize=(10, 6))
-        plt.plot(range(len(y_true_denorm)), y_true_denorm, label='Actual', color='green', linestyle='-')
-        plt.plot(range(len(y_pred_denorm)), y_pred_denorm, label='Predicted', color='blue', linestyle='-')
-        plt.title("Actual vs Predicted Curah Hujan (Denormalized)")
-        plt.xlabel("Index")
-        plt.ylabel("Curah Hujan")
+        plt.plot(y_test.index, y_test_denorm, label='Actual', color='green', linestyle='-')
+        plt.plot(y_test.index, y_pred_denorm, label='Predicted', color='blue', linestyle='-')
+        plt.title("Actual vs Predicted Curah Hujan")
+        plt.xlabel("Bulan-Tahun")
+        plt.ylabel("Curah Hujan (mm)")
         plt.legend()
         plt.grid()
         st.pyplot(plt)
