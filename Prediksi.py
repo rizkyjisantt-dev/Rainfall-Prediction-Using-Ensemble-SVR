@@ -307,6 +307,18 @@ elif choice == "Modelling":
         st.error("Data training/testing belum dibagi. Silakan lakukan pembagian data terlebih dahulu.")
         st.stop()
 
+    # Min dan Max dari data asli
+    if "data_min" in st.session_state and "data_max" in st.session_state:
+        data_min = st.session_state["data_min"]
+        data_max = st.session_state["data_max"]
+    else:
+        st.error("Nilai minimum dan maksimum dari data asli tidak ditemukan. Pastikan Anda telah menyimpannya selama proses normalisasi.")
+        st.stop()
+
+    # Fungsi untuk denormalisasi
+    def denormalize(y):
+        return y * (data_max - data_min) + data_min
+
     # Pilihan kernel dan jumlah estimator
     kernel = st.selectbox("Pilih Kernel untuk SVR:", ["linear", "rbf", "poly"])
     n_estimators = st.selectbox("Pilih Jumlah Estimator Bagging:", [5, 10, 20])
@@ -339,14 +351,14 @@ elif choice == "Modelling":
         best_model = grid_search.best_estimator_
         # Prediksi pada data testing
         y_pred = best_model.predict(X_test)
-        # Denormalisasi manual hasil prediksi dan data aktual
-        y_min = st.session_state["y_min"]
-        y_max = st.session_state["y_max"]
-        y_pred_denorm = y_pred * (y_max - y_min) + y_min
-        y_test_denorm = y_test.values * (y_max - y_min) + y_min
+
+        # Denormalisasi hasil prediksi dan data aktual
+        y_true_denorm = denormalize(y_test.values)
+        y_pred_denorm = denormalize(y_pred)
+
         # Evaluasi
-        rmse = mean_squared_error(y_test, y_pred, squared=False)
-        mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
+        rmse = mean_squared_error(y_true_denorm, y_pred_denorm, squared=False)
+        mape = np.mean(np.abs((y_true_denorm - y_pred_denorm) / y_true_denorm)) * 100
         # Output evaluasi
         st.write("### Hasil Evaluasi:")
         st.write(f"**RMSE:** {rmse:.2f}")
@@ -355,16 +367,18 @@ elif choice == "Modelling":
         # Simpan model ke dalam file
         joblib.dump(best_model, 'bagging_svr_model.pkl')
         st.success("Model berhasil disimpan ke file 'bagging_svr_model.pkl'")
+
         # Visualisasi Prediksi vs Aktual
         plt.figure(figsize=(10, 6))
-        plt.plot(y_test.index, y_test_denorm, label='Actual', color='green', linestyle='-')
-        plt.plot(y_test.index, y_pred_denorm, label='Predicted', color='blue', linestyle='-')
-        plt.title("Actual vs Predicted Curah Hujan")
-        plt.xlabel("Bulan-Tahun")
+        plt.plot(range(len(y_true_denorm)), y_true_denorm, label='Actual', color='green', linestyle='-')
+        plt.plot(range(len(y_pred_denorm)), y_pred_denorm, label='Predicted', color='blue', linestyle='-')
+        plt.title("Actual vs Predicted Curah Hujan (Denormalized)")
+        plt.xlabel("Index")
         plt.ylabel("Curah Hujan")
         plt.legend()
         plt.grid()
         st.pyplot(plt)
+
 
 
 
