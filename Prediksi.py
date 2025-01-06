@@ -339,6 +339,15 @@ elif choice == "Modelling":
         best_model = grid_search.best_estimator_
         # Prediksi pada data testing
         y_pred = best_model.predict(X_test)
+        # Fungsi untuk denormalisasi menggunakan MinMaxScaler
+        def denormalize(y):
+            return y * (data_max - data_min) + data_min
+        # Min dan Max dari data asli
+        data_min = data_outlier['curah_hujan'].min()  # misalnya nilai minimum dari data asli sebelum normalisasi
+        data_max = data_outlier['curah_hujan'].max() # misalnya nilai maksimum dari data asli sebelum normalisasi
+        # Denormalisasi
+        y_test_denorm = denormalize(y_test)
+        y_pred_denorm = denormalize(y_pred)
         # Evaluasi
         rmse = mean_squared_error(y_test, y_pred, squared=False)
         mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
@@ -352,8 +361,8 @@ elif choice == "Modelling":
         st.success("Model berhasil disimpan ke file 'bagging_svr_model.pkl'")
         # Visualisasi Prediksi vs Aktual
         plt.figure(figsize=(10, 6))
-        plt.plot(y_test.index, y_test, label='Actual', color='green', linestyle='-')
-        plt.plot(y_test.index, y_pred, label='Predicted', color='blue', linestyle='-')
+        plt.plot(y_test.index, y_test_denorm, label='Actual', color='green', linestyle='-')
+        plt.plot(y_test.index, y_pred_denorm, label='Predicted', color='blue', linestyle='-')
         plt.title("Actual vs Predicted Curah Hujan")
         plt.xlabel("Bulan-Tahun")
         plt.ylabel("Curah Hujan")
