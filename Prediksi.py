@@ -361,12 +361,16 @@ elif choice == "Modelling":
         # Denormalisasi y_test dan y_pred
         y_test_denorm = denormalize(y_test)
         y_pred_denorm = denormalize(y_pred)
-        # Evaluasi
-        rmse = root_mean_squared_error(y_test, y_pred, squared=False)
-        mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
+        # Perhitungan RMSE manual
+        n = len(y_test)
+        squared_errors = (y_test - y_pred) ** 2
+        mse_manual = sum(squared_errors) / n
+        rmse_manual = mse_manual ** 0.5  # Akar dari MSE untuk mendapatkan RMSE
+        # Perhitungan MAPE
+        mape = np.mean(np.abs((y_test_denorm - y_pred_denorm) / y_test_denorm)) * 100
         # Output evaluasi
         st.write("### Hasil Evaluasi:")
-        st.write(f"**RMSE:** {rmse:.2f}")
+        st.write(f"**RMSE (Manual):** {rmse_manual:.2f}")
         st.write(f"**MAPE:** {mape:.2f}%")
         st.write("Hyperparameter optimal:", grid_search.best_params_)
         # Simpan model ke dalam file
