@@ -325,6 +325,15 @@ elif choice == "Modelling":
     def denormalize(y):
         return y * (data_max - data_min) + data_min
 
+    # Fungsi evaluasi MAPE atau fallback ke MAE
+    def calculate_mape_or_mae(y_test, y_pred):
+        if np.any(y_test == 0):  # Jika ada nilai nol di y_test
+            mae = np.mean(np.abs(y_test - y_pred))
+            st.warning("Terdapat nilai nol di data aktual. Menggunakan MAE sebagai fallback.")
+            return mae, "MAE"
+        else:
+            mape = np.mean(np.abs((y_test - y_pred) / y_test)) * 100
+            return mape, "MAPE"
 
     # Pilihan kernel dan jumlah estimator
     kernel = st.selectbox("Pilih Kernel untuk SVR:", ["linear", "rbf", "poly"])
@@ -361,17 +370,13 @@ elif choice == "Modelling":
         # Denormalisasi y_test dan y_pred
         y_test_denorm = denormalize(y_test)
         y_pred_denorm = denormalize(y_pred)
-        # Perhitungan RMSE manual
-        n = len(y_test)
-        squared_errors = (y_test - y_pred) ** 2
-        mse_manual = sum(squared_errors) / n
-        rmse_manual = mse_manual ** 0.5  # Akar dari MSE untuk mendapatkan RMSE
-        # Perhitungan MAPE
-        mape = np.mean(np.abs((y_test_denorm - y_pred_denorm) / y_test_denorm)) * 100
+        # Evaluasi
+        rmse = mean_squared_error(y_test, y_pred, squared=False)
+        mape_or_mae, metric_name = calculate_mape_or_mae(y_test, y_pred)
         # Output evaluasi
         st.write("### Hasil Evaluasi:")
-        st.write(f"**RMSE :):** {rmse_manual:.2f}")
-        st.write(f"**MAPE :** {mape:.2f}%")
+        st.write(f"**RMSE:** {rmse:.2f}")
+        st.write(f"**{metric_name}:** {mape_or_mae:.2f}%")
         st.write("Hyperparameter optimal:", grid_search.best_params_)
         # Simpan model ke dalam file
         joblib.dump(best_model, 'bagging_svr_model.pkl')
@@ -386,8 +391,3 @@ elif choice == "Modelling":
         plt.legend()
         plt.grid()
         st.pyplot(plt)
-
-
-
-
-
