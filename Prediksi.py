@@ -12,7 +12,6 @@ from sklearn.model_selection import train_test_split, GridSearchCV  # Untuk pemi
 from sklearn.utils import resample  # Untuk teknik sampling ulang seperti bootstrap
 from sklearn.ensemble import BaggingRegressor  # Model ensemble yang menggunakan teknik bootstrap untuk regresi
 from sklearn.svm import SVR  # Support Vector Regression untuk model regresi
-from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error  # Untuk mengukur performa model regresi
 import joblib  # Untuk menyimpan dan memuat model atau objek Python
 import pickle
 
@@ -371,12 +370,12 @@ elif choice == "Modelling":
         y_test_denorm = denormalize(y_test)
         y_pred_denorm = denormalize(y_pred)
         # Evaluasi
-        rmse = mean_squared_error(y_test, y_pred, squared=False)
+        rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
         mape_or_mae, metric_name = calculate_mape_or_mae(y_test, y_pred)
         # Output evaluasi
         st.write("### Hasil Evaluasi:")
         st.write(f"**RMSE:** {rmse:.2f}")
-        st.write(f"**{metric_name}:** {mape_or_mae:.2f}%")
+        st.write(f"**{metric_name}:** {mape_or_mae:.2f}")
         st.write("Hyperparameter optimal:", grid_search.best_params_)
         # Simpan model ke dalam file
         joblib.dump(best_model, 'bagging_svr_model.pkl')
