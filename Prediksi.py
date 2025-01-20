@@ -419,8 +419,8 @@ elif choice == "Prediksi":
     model = st.session_state['svr_model']
 
     # Input jumlah hari prediksi
-    st.write("Silakan masukkan jumlah hari yang ingin diprediksi (1-14):")
-    pred_days = st.number_input("Jumlah Hari Prediksi", min_value=1, max_value=14, value=1, step=1)
+    st.write("Silakan masukkan jumlah hari yang ingin diprediksi (1-7):")
+    pred_days = st.number_input("Jumlah Hari Prediksi", min_value=1, max_value=7, value=1, step=1)
 
     # Tombol untuk memulai prediksi
     if st.button("Lakukan Prediksi"):
