@@ -37,7 +37,7 @@ menu = ["Homepage", "Dataset", "Preprocessing", "Pembagian Data", "Modelling", "
 choice = st.sidebar.selectbox("Pilih Halaman", menu)
 
 # Load dataset from GitHub
-url = "https://raw.githubusercontent.com/rizkyjisantt/skripsi/refs/heads/main/laporan_iklim_2018-2024_terbaru.csv"
+url = "https://raw.githubusercontent.com/rizkyjisantt/skripsi/refs/heads/main/laporan_iklim_streamlit.csv"
 
 def load_data():
     # Langkah 2: Ambil data dari GitHub dan masukkan ke dalam DataFrame
@@ -65,13 +65,16 @@ if choice == "Homepage":
 
 elif choice == "Dataset":
     st.title("Dataset")
+    # Mendapatkan jumlah data terbaru
+    data = load_data()
+    jumlah_data = data.shape[0]
     # Menambahkan penjelasan tentang dataset
-    st.write("""
+    st.write(f"""
     **Penjelasan Dataset:**
     Data yang digunakan berasal dari hasil observasi dari Badan Meteorologi, Klimatologi, dan Geofisika (BMKG) Stasiun Meteorologi Perak I. 
     Data ini diambil dari website [http://dataonline.bmkg.go.id/dataonline-home](http://dataonline.bmkg.go.id/dataonline-home). 
-    Data harian selama lima tahun terakhir, mulai Januari 2018 hingga Desember 2024, digunakan untuk penelitian ini. 
-    Total jumlah data hingga saat ini berjumlah 2.557 data. 
+    Data harian selama lima tahun terakhir, mulai Januari 2018 hingga data terbaru, digunakan untuk penelitian ini. 
+    Total jumlah data hingga saat ini berjumlah {jumlah_data} data. 
     Parameter yang digunakan dalam penelitian ini adalah:
     - **Curah Hujan** dengan satuan millimeter (mm)
     - **Titik Kelembapan Rata-rata** dengan satuan persen (%)
@@ -79,14 +82,13 @@ elif choice == "Dataset":
     - **Kecepatan Angin Rata-rata** dengan satuan meter per sekon (m/s)
     """)
     # Menampilkan data frame
-    data = load_data()
     st.write("### Dataframe")
     st.write("""
-    Data yang ditampilkan di bawah ini adalah potongan pertama (5 baris) dari dataset yang digunakan. 
+    Data yang ditampilkan di bawah ini adalah (5 baris) data terbawah/terbaru dari dataset yang digunakan. 
     Data ini mencakup parameter curah hujan, kelembapan, temperatur, dan kecepatan angin pada stasiun meteorologi Perak I. 
     Anda dapat melihat nilai-nilai untuk setiap parameter per tanggal dalam dataset ini.
     """)
-    st.dataframe(data.head())
+    st.dataframe(data.tail(5))
     # Menampilkan statistik deskriptif
     st.write("### Statistik Deskriptif")
     st.write("""
@@ -96,15 +98,15 @@ elif choice == "Dataset":
     """)
     st.write(data.describe())
     # Plot Grafik Curah Hujan
-    st.write("### Grafik Curah Hujan 2018-2024")
+    st.write("### Grafik Curah Hujan 2018-Terbaru")
     st.write("""
-    Grafik ini menunjukkan perubahan curah hujan selama periode Januari 2018 hingga Desember 2024. 
+    Grafik ini menunjukkan perubahan curah hujan selama periode Januari 2018 hingga data terbaru. 
     Visualisasi ini memberikan gambaran umum tentang tren curah hujan selama lima tahun terakhir, 
     yang dapat digunakan untuk analisis lebih lanjut, seperti identifikasi pola musiman atau ekstrem.
     """)
     plt.figure(figsize=(14, 6))
     plt.plot(data['curah_hujan'], label='Curah Hujan', color='green')
-    plt.title('Grafik Curah Hujan 2018-2024')
+    plt.title('Grafik Curah Hujan 2018-Terbaru')
     plt.xlabel('Tahun')
     plt.ylabel('Curah Hujan (mm)')
     plt.gca().xaxis.set_major_locator(mdates.YearLocator())
