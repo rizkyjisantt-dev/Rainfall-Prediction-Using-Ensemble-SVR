@@ -1,65 +1,67 @@
 # Rainfall Prediction Using Ensemble SVR
 
 ## 📌 Overview
-Proyek ini merupakan bagian dari skripsi berjudul **"Penerapan Metode Ensemble untuk Multivariate Time Series Berbasis Kernel pada Peramalan Curah Hujan (Studi Kasus: Stasiun Meteorologi Perak I)"**. Penelitian ini menggunakan metode **Ensemble Support Vector Regression (SVR)** untuk melakukan peramalan curah hujan berdasarkan data cuaca multivariate yang telah dinormalisasi.
+This project is part of the thesis titled **"Application of Ensemble Methods for Kernel-Based Multivariate Time Series in Rainfall Forecasting (Case Study: Perak I Meteorological Station)"**. This research utilizes the **Ensemble Support Vector Regression (SVR)** method to forecast rainfall based on normalized multivariate weather data.
 
-## 🔍 Metode Penelitian
-- **Data**: Data cuaca dari Stasiun Meteorologi Perak I dengan fitur **Temperatur, Kelembapan, Kecepatan Angin, dan Curah Hujan**.
-- **Exploratory Data Analysis**: mengeksplorasi dan menganalisis kumpulan data dengan menggunakan teknik visualisasi dan statistik seperti:
-  - **Statistik Deskriptif**: Melakukan perhitungan ringkasan statistik seperti mean, median, dan deviasi standar untuk menganalisis nilai-nilai pusat dan sebaran data.
-  - **Visualisasi Data**: Menggunakan berbagai jenis grafik seperti histogram, diagram pencar (scatter plot), dan box plot untuk memvisualisasikan distribusi data dan hubungan antar variabel.
+## 🔍 Research Methodology
+- **Data**: Weather data from Perak I Meteorological Station with features **Temperature, Humidity, Wind Speed, and Rainfall**.
+- **Exploratory Data Analysis**: Exploring and analyzing the dataset using visualization and statistical techniques, such as:
+  - **Descriptive Statistics**: Calculating summary statistics like mean, median, and standard deviation to analyze central tendencies and data distribution.
+  - **Data Visualization**: Using various types of graphs, such as histograms, scatter plots, and box plots, to visualize data distribution and relationships between variables.
 - **Preprocessing**:
-  - **Interpolasi** untuk mengisi missing value.
-  - **Normalisasi** untuk menyamakan skala fitur.
-  - **Deteksi dan Penanganan Outlier** menggunakan Z-score.
-  - **Sliding Window Penentuan Input dan Output** menggunakan ACF dan PACF.
-- **Pembagian Data**: Pembagian ini dilakukan dengan rasio 80:20, di mana 80% dari data digunakan sebagai data latih dan 20% sisanya sebagai data uji.
+  - **Interpolation** to fill missing values.
+  - **Normalization** to standardize feature scales.
+  - **Outlier Detection and Handling** using Z-score.
+  - **Sliding Window for Input and Output Determination** using ACF and PACF.
+- **Data Splitting**: The dataset is split with an 80:20 ratio, where 80% is used for training and the remaining 20% for testing.
 - **Modeling**:
-  - **Bootstrap Sampling** untuk membentuk beberapa subset data training sebanyak 5, 10, dan 20 estimator.
-  - **Support Vector Regression (SVR) dengan kernel Linear, RBF dan Polynomial**.
-  - **Optimasi Hyperparameter menggunakan GridSearch**.
-- **Evaluasi**: Menggunakan metrik **MAE dan RMSE**.
+  - **Bootstrap Sampling** to create multiple training data subsets with 5, 10, and 20 estimators.
+  - **Support Vector Regression (SVR) with Linear, RBF, and Polynomial kernels**.
+  - **Hyperparameter Optimization using GridSearch**.
+- **Evaluation**: Using **MAE and RMSE** metrics.
 
-## 📂 Struktur Repository
+## 📂 Repository Structure
 ```
-├── data/                      # Dataset curah hujan setelah preprocessing
-├── models/                    # Model yang telah dilatih
-├── notebooks/                 # Notebook Jupyter untuk eksplorasi dan eksperimen
-├── scripts/                   # Script untuk preprocessing, training, dan evaluasi
-├── results/                   # Hasil prediksi dan evaluasi model
-├── README.md                  # Dokumentasi proyek
+├── data/                      # Preprocessed rainfall dataset
+├── models/                    # Trained models
+├── notebooks/                 # Jupyter Notebooks for exploration and experiments
+├── scripts/                   # Scripts for preprocessing, training, and evaluation
+├── results/                   # Model predictions and evaluation results
+├── README.md                  # Project documentation
 ```
 
-## 🚀 Instalasi dan Penggunaan
+## 🚀 Installation and Usage
 ### 1. Clone Repository
 ```bash
 git clone https://github.com/rizkyjisantt-dev/rainfall-prediction-using-ensemblesvr.git
 cd rainfall-prediction-using-ensemblesvr
 ```
 ### 2. Install Dependencies
-Gunakan Python 3.8+ dan install package yang diperlukan:
+Use Python 3.8+ and install the required packages:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Jalankan Eksperimen
-Gunakan Jupyter Notebook atau jalankan script Python untuk menjalankan eksperimen:
+### 3. Run Experiments
+Use Jupyter Notebook or run Python scripts to execute experiments:
 ```bash
 jupyter notebook
 ```
-Atau jalankan model langsung:
+Or run the model directly:
 ```bash
 python scripts/train_model.py
 ```
 
-## 📊 Hasil dan Analisis
-- Model terbaik dipilih berdasarkan nilai **MSE, RMSE, dan R²**.
-- Diperbandingkan antara **SVR biasa dan Ensemble SVR** untuk melihat peningkatan performa.
-- Analisis korelasi dilakukan untuk memahami hubungan antar fitur dengan curah hujan.
+## 📊 Results and Analysis
+- The best model is selected based on **MAE and RMSE** values.
+- A comparison is made between **Standard SVR and Ensemble SVR** to assess performance improvements.
+- Autocorrelation analysis is conducted to understand rainfall relationships.
 
-## 🏆 Kontribusi dan Lisensi
-Proyek ini bersifat open-source. Jika ingin berkontribusi atau berdiskusi, silakan lakukan **pull request** atau hubungi melalui **[GitHub Issues](https://github.com/rizkyjisantt-dev/rainfall-prediction-using-ensemblesvr/issues)**.
+## 🏆 Contributions and License
+This project is open-source. If you would like to contribute or discuss, feel free to submit a **pull request** or reach out via **[GitHub Issues](https://github.com/rizkyjisantt-dev/rainfall-prediction-using-ensemblesvr/issues)**.
 
 ---
-✉️ **Dikembangkan oleh [Rizky Jisantt](https://github.com/rizkyjisantt-dev/)**
+✉️ **Developed by [Rizky Jisantt](https://github.com/rizkyjisantt-dev/)**
+
+
 
