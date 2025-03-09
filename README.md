@@ -33,8 +33,8 @@ This project is part of the thesis titled **"Application of Ensemble Methods for
 ## 🚀 Installation and Usage
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/rizkyjisantt-dev/rainfall-prediction-using-ensemblesvr.git
-cd rainfall-prediction-using-ensemblesvr
+git clone https://github.com/rizkyjisantt-dev/Rainfall-Prediction-Using-Ensemble-SVR.git
+cd Rainfall-Prediction-Using-Ensemble-SVR
 ```
 ### 2. Install Dependencies
 Use Python 3.8+ and install the required packages:
@@ -49,7 +49,7 @@ jupyter notebook
 ```
 Or run the model directly:
 ```bash
-python scripts/train_model.py
+python scripts/Prediksi.py
 ```
 
 ## 📊 Results and Analysis
