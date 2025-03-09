@@ -4,7 +4,7 @@
 This project is part of the thesis titled **"Application of Ensemble Methods for Kernel-Based Multivariate Time Series in Rainfall Forecasting (Case Study: Perak I Meteorological Station)"**. This research utilizes the **Ensemble Support Vector Regression (SVR)** method to forecast rainfall based on normalized multivariate weather data.
 
 ## 🔍 Research Methodology
-- **Data**: Weather data from Perak I Meteorological Station with features **Temperature, Humidity, Wind Speed, and Rainfall**.
+- **Data**: Weather data from (BMKG) Perak I Meteorological Station with features **Temperature, Humidity, Wind Speed, and Rainfall**.
 - **Exploratory Data Analysis**: Exploring and analyzing the dataset using visualization and statistical techniques, such as:
   - **Descriptive Statistics**: Calculating summary statistics like mean, median, and standard deviation to analyze central tendencies and data distribution.
   - **Data Visualization**: Using various types of graphs, such as histograms, scatter plots, and box plots, to visualize data distribution and relationships between variables.
